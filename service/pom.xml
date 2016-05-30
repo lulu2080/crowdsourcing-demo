@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>crowdsourcing-demo-service</artifactId>
+    <packaging>jar</packaging>
+
+    <name>crowdsourcing-demo-service</name>
+    <description>crowdsourcing demo service project</description>
+
+    <parent>
+        <artifactId>crowdsourcing-demo</artifactId>
+        <groupId>com.funci</groupId>
+        <version>0.0.1</version>
+        <relativePath>../</relativePath>
+    </parent>
+    
+    <properties>       
+        <xplat.version>0.0.2</xplat.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.funci</groupId>
+            <artifactId>crowdsourcing-demo-api</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ouyeel.xplat</groupId>
+            <artifactId>oyys-service</artifactId>
+            <exclusions>
+             <exclusion>
+              <groupId>com.ouyeel.xplat</groupId>
+              <artifactId>xplat-security-provider</artifactId>
+             </exclusion>
+           </exclusions> 
+        </dependency>
+        
+		
+		<dependency>
+			<groupId>com.ouyeel.xplat</groupId>
+			<artifactId>xplat-log</artifactId>
+			<version>${xplat.version}</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>com.ouyeel.xplat</groupId>
+		  <artifactId>xplat-security-authz-provider</artifactId>
+		  <version>${xplat.version}</version>
+		</dependency>
+				
+		<!-- 
+		<dependency>
+           <groupId>com.ouyeel.xplat</groupId>
+           <artifactId>xplat-data-redis</artifactId>
+           <version>${xplat.version}</version>
+         </dependency>
+          -->
+          <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+          
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+       <dependency>
+        	<groupId>com.ouyeel.xplat</groupId>
+        	<artifactId>xplat-tools-mail</artifactId>
+        	<version>0.0.2</version>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

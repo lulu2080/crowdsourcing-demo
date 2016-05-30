@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	 <!-- classPathEntry:数据库的JDBC驱动的jar包地址-->  
+	<classPathEntry location="C:\Users\huangke\.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar" />
+	
+	<context id="seed" defaultModelType="flat">
+		<plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+			<property name="suppressJavaInterface" value="false" />
+		</plugin>
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+		
+		<commentGenerator><!-- 是否去除自动生成的注释 true：是 ： false:否 -->  
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		
+		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->  
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://10.25.1.22:3306/xplat" userId="xplat" password="xplat" />
+		
+		<javaModelGenerator targetPackage="com.ouyeel.demo.order.common.domain"  targetProject="src/main/java">
+			<property name="rootClass" value="com.ouyeel.xplat.core.domain.XDomain" />
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="com.ouyeel.demo.order.common.mapper" targetProject="../service/src/main/java" />
+		<javaClientGenerator targetPackage="com.ouyeel.demo.order.common.mapper" targetProject="../service/src/main/java"  type="XMLMAPPER">
+			<property name="rootInterface" value="com.ouyeel.xplat.data.mapper.XMapper" />
+		</javaClientGenerator>
+		
+		<!-- 订单-->
+		<table schema="xplat" tableName="t_order" domainObjectName="Order">
+			<property name="rootClass" value="com.ouyeel.xplat.core.domain.XAuditable" />
+			<!--<property name="rootClass" value="com.ouyeel.xplat.core.domain.XBaseDomain" />-->
+			<!--<generatedKey column="id" sqlStatement="JDBC" identity="true" />-->
+		</table>
+		
+		
+	</context>
+</generatorConfiguration>

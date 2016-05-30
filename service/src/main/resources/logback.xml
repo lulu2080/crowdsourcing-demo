@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    
+    <logger name="com.ouyeel.demo" level="INFO"/>
+    <!--myibatis log configure
+    <logger name="com.apache.ibatis" level="TRACE"/>
+    <logger name="java.sql.Connection" level="DEBUG"/>
+    <logger name="java.sql.Statement" level="DEBUG"/>
+    <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+    <logger name="org.springframework.web" level="INFO"/>
+    -->
+    
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->  
+    <property name="LOG_HOME" value="./xlogs/" />
+    <property name="APP_NAME" value="XPLAT" />
+    
+    <!-- 控制台输出 -->  
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>  
+        </encoder>
+    </appender>  
+    
+    <!-- 按照每天生成日志文件 -->   
+    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">   
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/xplat.log.%d{yyyy-MM-dd}.log</FileNamePattern> 
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>   
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"> 
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+             <!--<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern> -->
+        </encoder> 
+        <!--日志文件最大的大小-->
+       <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+         <MaxFileSize>10MB</MaxFileSize>
+       </triggeringPolicy>
+    </appender> 
+
+   
+  <!-- 输出logstash文件 --> 
+    <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+ 			<customFields>{"x_app_env":"${APP_NAME}"}</customFields>
+        </encoder>       
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/logstash-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+    
+     <!-- 输出logstash --> 
+    <appender name="TCPLOG" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <remoteHost>10.70.82.64</remoteHost>
+        <port>5000</port>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+  
+  <!--   <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+        日志异步到数据库
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">                  
+              <driverClass>com.mysql.jdbc.Driver</driverClass>
+              <url>jdbc:mysql://127.0.0.1:3306/xplat</url>
+              <user>iplat</user>
+              <password>iplat</password>           
+        </connectionSource>
+   </appender> -->
+
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+    <!-- <appender-ref ref="STDOUT"/>  -->
+     <appender-ref ref="FILE"/>
+        <!-- <appender-ref ref="DB"/> -->
+        <!-- <appender-ref ref="TCPLOG" /> -->
+      <appender-ref ref="LOGSTASH" />       
+    </root>
+    
+    
+</configuration>
